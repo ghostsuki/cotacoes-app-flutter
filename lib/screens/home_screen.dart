@@ -204,7 +204,9 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: cotacoes.length,
         itemBuilder: (context, index) {
           final cotacao = cotacoes[index];
-          return Container(
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 300 + (index * 100)),
+            curve: Curves.easeOutBack,
             margin: const EdgeInsets.only(bottom: 12),
             child: Card(
               elevation: 4,
@@ -327,10 +329,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   onTap: () async {
+                    // Feedback haptic
+                    // HapticFeedback.lightImpact(); // Descomente se quiser vibração
+
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsScreen(cotacao: cotacao),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            DetailsScreen(cotacao: cotacao),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
+
+                          var tween = Tween(begin: begin, end: end).chain(
+                            CurveTween(curve: curve),
+                          );
+
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
                       ),
                     );
                   },
