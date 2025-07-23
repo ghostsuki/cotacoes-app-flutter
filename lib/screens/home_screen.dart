@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/cotacao.dart';
 import '../services/api_service.dart';
+import 'details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -128,34 +129,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text('Atualizado em: ${cotacao.data}'),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    'R\$ ${cotacao.valor.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'R\$ ${cotacao.valor.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                      Text(
+                        '1 ${cotacao.moeda}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '1 ${cotacao.moeda}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
+                  const SizedBox(width: 8),
+                  const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: Colors.grey,
                   ),
                 ],
               ),
-              onTap: () {
-                // Navegação para detalhes será implementada no Dia 3
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Detalhes de ${cotacao.moeda} - Em breve!'),
+              onTap: () async {
+                // Navegação para a tela de detalhes
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsScreen(cotacao: cotacao),
                   ),
                 );
+                // Opcional: Atualizar dados quando voltar
+                // carregarCotacoes();
               },
             ),
           );
