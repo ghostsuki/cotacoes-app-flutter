@@ -188,6 +188,8 @@ Instale as extensões recomendadas:
 - ✅ Documentação completa
 - ✅ Deploy e entrega
 
+## Dia 6 - Linha de Teste para atividade de GPS
+
 ## Contribuição
 
 1. Faça um fork do projeto
