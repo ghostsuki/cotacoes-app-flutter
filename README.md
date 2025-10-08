@@ -188,6 +188,8 @@ Instale as extensões recomendadas:
 - ✅ Documentação completa
 - ✅ Deploy e entrega
 
+### Dia 6: Teste final
+
 ## Contribuição
 
 1. Faça um fork do projeto
